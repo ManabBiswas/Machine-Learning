@@ -4,7 +4,7 @@ This repository contains two machine learning projects focused on predictive mod
 
 ---
 
-## 📁 Project Structure
+## Project Structure
 
 ```
 ML/
@@ -21,7 +21,7 @@ ML/
 
 ---
 
-## 🔍 Project 1: Insurance Prediction
+## Project 1: Insurance Prediction
 
 **File:** `ML_project_1/insurance.ipynb`
 
@@ -61,7 +61,7 @@ Selected features based on statistical significance:
 
 ---
 
-## ❤️ Project 2: Heart Disease Prediction
+## Project 2: Heart Disease Prediction
 
 **File:** `ML_Project_2/Heart.ipynb`
 
@@ -127,7 +127,7 @@ scipy.stats     # Statistical analysis
 
 ---
 
-## 📊 Common Preprocessing Steps
+## Common Preprocessing Steps
 
 ### Data Cleaning
 ```python
@@ -173,8 +173,8 @@ df[numeric_cols] = scaler.fit_transform(df[numeric_cols])
 | **Heatmap** | Correlation between features |
 
 ---
-
-## ✅ Next Steps
+<!--
+## Next Steps
 
 - Train classification models (Logistic Regression, Random Forest, etc.)
 - Grid search for hyperparameter tuning
@@ -182,8 +182,9 @@ df[numeric_cols] = scaler.fit_transform(df[numeric_cols])
 - Generate predictions on test data
 
 ---
+-->
 
-## 📝 Notes
+## Notes
 
 - Both projects use pandas for data manipulation
 - Seaborn and matplotlib for comprehensive visualizations
