@@ -5,11 +5,32 @@
 [![Scikit-Learn](https://img.shields.io/badge/Scikit--Learn-ML-green.svg)](https://scikit-learn.org/)
 [![Seaborn](https://img.shields.io/badge/Seaborn-Visualization-blue.svg)](https://seaborn.pydata.org/)
 
-A collection of predictive modeling projects focused on healthcare and insurance data. This repository demonstrates the end-to-end ML pipeline: from raw data exploration and rigorous preprocessing to statistical feature engineering.
+A collection of machine learning projects covering healthcare, insurance, automotive, passenger survival, and flower classification datasets. The notebooks demonstrate an end-to-end workflow from data exploration and preprocessing to model training and evaluation.
 
 ---
 
 ## 🚀 Projects
+
+### 🧬 Iris Classification with KNN
+**Path:** `ML_Project_5/KNN-2.ipynb`
+
+Classifies Iris flowers with a K-Nearest Neighbors model.
+- **Key Highlights:**
+  - Loaded and explored the Iris dataset from scikit-learn.
+  - Standardized features with `StandardScaler` before distance-based modeling.
+  - Trained a 5-neighbor KNN classifier.
+  - Evaluated accuracy, classification metrics, and a confusion matrix.
+  - Predicted the class of a new flower sample.
+
+### 🚗 Ford Vehicle Analysis
+**Path:** `ML_Project_3/notebook687e6ed2f6.ipynb`
+
+Explores Ford vehicle data and applies machine learning techniques to an automotive dataset.
+
+### 🚢 Titanic Survival Prediction
+**Path:** `ML_Project_4/Titanic.ipynb`
+
+Analyzes passenger data to investigate the factors associated with Titanic survival.
 
 ### 🏥 Heart Disease Prediction
 **Path:** `ML_Project_2/Heart.ipynb`
@@ -22,7 +43,7 @@ Predicts the presence of heart disease based on clinical and physical measuremen
   - Standardized features using `StandardScaler`.
 
 ### 💰 Insurance Charge Prediction
-**Path:** `ML_project_1/insurance.ipynb`
+**Path:** `ML_ project_1/insurance.ipynb`
 
 Predicts healthcare insurance costs based on customer demographics and health metrics.
 - **Key Highlights:**
@@ -46,7 +67,7 @@ Predicts healthcare insurance costs based on customer demographics and health me
 
 ## 📖 Core ML Workflow
 
-This repository follows a standardized preprocessing pipeline:
+The projects use a practical machine learning workflow:
 
 ### 1. Data Cleaning & Engineering
 - **Duplicate Removal:** `df.drop_duplicates()`
@@ -54,7 +75,7 @@ This repository follows a standardized preprocessing pipeline:
 - **Encoding:** 
   - Binary mapping for simple categories.
   - One-hot encoding via `pd.get_dummies()` for multi-class categories.
-- **Scaling:** Normalizing numeric ranges using `StandardScaler`.
+- **Scaling:** Normalizing numeric ranges using `StandardScaler`, especially before distance-based models such as KNN.
 
 ### 2. Exploratory Data Analysis (EDA)
 | Plot Type | Purpose |
