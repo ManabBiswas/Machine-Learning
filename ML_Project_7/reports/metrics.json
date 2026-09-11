@@ -1,0 +1,9 @@
+{
+  "model": "Logistic Regression",
+  "model_version": "1.0",
+  "accuracy": 0.836,
+  "f1": 0.848,
+  "feature_count": 13,
+  "training_rows": 734,
+  "last_trained": "2026-08-29"
+}
