@@ -1,6 +1,6 @@
-# Heart Disease Prediction Project
+# Heart Disease Prediction — CardioLens
 
-A machine learning project that predicts whether a patient is at risk of heart disease using clinical features such as age, cholesterol, blood pressure, chest pain, and exercise-related symptoms.
+A machine learning project that predicts whether a patient is at risk of heart disease using 13 clinical features such as age, cholesterol, blood pressure, chest pain type, and exercise-related indicators. The final model is served through **CardioLens**, a fully themed Streamlit web app with dark/light modes, an animated risk gauge, and per-patient explainability.
 
 ## Project Objective
 
@@ -10,9 +10,9 @@ This project demonstrates a complete machine learning workflow:
 2. Feature preprocessing
 3. Model training and comparison
 4. Model evaluation
-5. Deployment as a simple Streamlit web app
+5. Deployment as an interactive Streamlit web app
 
-## Current Project Structure
+## Project Structure
 
 ```text
 ML_Project_7/
@@ -25,7 +25,7 @@ ML_Project_7/
 |       |-- x_test_processed.csv
 |       |-- y_train.csv
 |       |-- y_test.csv
-|       |-- preprocessor.joblib
+|       `-- preprocessor.joblib
 |-- models/
 |   |-- logistic_regression_model.pkl
 |   `-- feature_columns.pkl
@@ -34,17 +34,22 @@ ML_Project_7/
 |   |-- 02_model_training.ipynb
 |   `-- 03_model_evaluation.ipynb
 |-- app/
-|   |-- app.py
+|   |-- app.py              # CardioLens Streamlit app
+|   |-- styles.css           # Dual-theme glassmorphism stylesheet
+|   |-- heart.png            # Favicon / page icon
 |   `-- requirements.txt
 |-- reports/
-|   |-- prediction_logs.csv
+|   |-- metrics.json         # Accuracy / F1 metrics for the app header
+|   `-- prediction_logs.csv  # History of app predictions
+|-- .streamlit/
+|   `-- config.toml          # Native Streamlit theme (dark, blue accent)
 |-- README.md
 `-- .gitignore
 ```
 
 ## Models Used
 
-The project compares several classification models, including:
+The project compares several classification models:
 
 - Logistic Regression
 - Naive Bayes
@@ -52,7 +57,7 @@ The project compares several classification models, including:
 - SVM
 - KNN
 
-The final selected model is the Logistic Regression model because it gives the best balance of accuracy and F1-score on the test set.
+The final selected model is **Logistic Regression** because it gives the best balance of accuracy and F1-score on the test set, and its coefficients allow per-patient risk explanation.
 
 ## Evaluation Result
 
@@ -73,17 +78,32 @@ This is a strong result for a beginner-friendly healthcare prediction task and s
 6. Use the Streamlit app in `app/app.py` to make predictions from patient data
 7. Store prediction attempts in `reports/prediction_logs.csv`
 
-## Streamlit Frontend
+## CardioLens — Streamlit Frontend
 
 To run the app locally:
 
 ```bash
-cd "C:\Users\Manab Biswas\codes\codeSpace5\ML\ML_Project_7"
+cd ML_Project_7
 pip install -r app/requirements.txt
 streamlit run app/app.py
 ```
 
-The app provides a form where the user enters clinical values and receives a heart disease risk prediction.
+### Features
+
+- **Assessment form** — 13 clinical inputs grouped into Demographics, Vitals & Labs, and ECG & Exercise sections, with reference ranges and tooltips on every field
+- **Example patient** — one-click prefill of a known high-risk sample
+- **Animated risk gauge** — predicted probability with a smooth sweep animation and risk tier (Low / Moderate / High)
+- **Top Risk Drivers** — signed per-feature log-odds contributions from the logistic regression coefficients, grouped and ranked per patient
+- **Input Summary** — friendly labels with units (e.g. `Resting BP · 125 mm Hg`) for exactly what was scored
+- **Prediction history** — recent predictions table with summary chips and full CSV download
+- **Dark / light theme** — live toggle; the entire UI, gauge, and charts adapt instantly
+- **Design** — glassmorphism panels, gradient accents, ECG-line hero animation, and responsive layout for mobile
+
+### Configuration
+
+- `app/styles.css` holds the full dual-theme design system (CSS variables per theme)
+- `.streamlit/config.toml` aligns Streamlit's native widgets with the dark theme
+- `reports/metrics.json` feeds the accuracy / F1 stat cards in the app header
 
 ## Notes
 
@@ -95,5 +115,5 @@ The app provides a form where the user enters clinical values and receives a hea
 
 - Add more models and hyperparameter tuning
 - Add confusion matrix and ROC chart visualization
-- Improve the frontend styling and layout
 - Deploy the app on Streamlit Cloud or Render
+- Patient-level SHAP values for richer explanations
