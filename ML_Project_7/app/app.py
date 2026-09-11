@@ -1,4 +1,5 @@
 import json
+import re
 from datetime import datetime
 from pathlib import Path
 
@@ -130,7 +131,12 @@ def inject_base_style():
     """Inject theme variables + stylesheet via st.html (CSS-only content is
     routed to the event container by Streamlit, so it takes no layout space
     and <style> tags are preserved)."""
-    css = theme_vars() + "\n" + STYLES_PATH.read_text(encoding="utf-8")
+    raw = STYLES_PATH.read_text(encoding="utf-8")
+    import_re = re.compile(r"^(@import\s+url\([^)]+\);)", re.MULTILINE)
+    import_match = import_re.search(raw)
+    import_line = (import_match.group(1) + "\n") if import_match else ""
+    body = import_re.sub("", raw).lstrip("\n")
+    css = import_line + theme_vars() + "\n" + body
     st.html(f"<style>{css}</style>")
 
 
@@ -251,11 +257,19 @@ def render_hero(metrics: dict):
     )
 
 
+STAT_GRADIENT_IDS = {
+    "Accuracy": "g-acc",
+    "F1 Score": "g-f1",
+    "Model": "g-mdl",
+}
+
+
 def stat_card(delay: str, icon: str, label: str, value: str, hint: str) -> str:
+    gid = STAT_GRADIENT_IDS.get(label, f"g-{label.lower()}")
     return f"""
     <div class="stat-card {delay}">
         <div class="stat-icon">
-            <svg viewBox="0 0 24 24" fill="none" stroke="url(#g-{label})" stroke-width="2"
+            <svg viewBox="0 0 24 24" fill="none" stroke="url(#{gid})" stroke-width="2"
                  stroke-linecap="round" stroke-linejoin="round">{icon}</svg>
         </div>
         <div class="stat-label">{label}</div>
@@ -282,13 +296,13 @@ def render_stat_cards(metrics: dict):
     gradients = """
     <svg width="0" height="0" style="position:absolute">
         <defs>
-            <linearGradient id="g-Accuracy" x1="0" y1="0" x2="1" y2="1">
+            <linearGradient id="g-acc" x1="0" y1="0" x2="1" y2="1">
                 <stop offset="0" stop-color="var(--accent)"/><stop offset="1" stop-color="var(--accent2)"/>
             </linearGradient>
-            <linearGradient id="g-F1 Score" x1="0" y1="0" x2="1" y2="1">
+            <linearGradient id="g-f1" x1="0" y1="0" x2="1" y2="1">
                 <stop offset="0" stop-color="var(--accent2)"/><stop offset="1" stop-color="var(--grad-c)"/>
             </linearGradient>
-            <linearGradient id="g-Model" x1="0" y1="0" x2="1" y2="1">
+            <linearGradient id="g-mdl" x1="0" y1="0" x2="1" y2="1">
                 <stop offset="0" stop-color="var(--grad-c)"/><stop offset="1" stop-color="var(--accent)"/>
             </linearGradient>
         </defs>
@@ -307,7 +321,7 @@ def build_patient_form(example: bool):
         "ca": 0, "thal": 0,
     }
 
-    st.markdown("**Demographics**", help="Core patient profile")
+    st.markdown('<div class="form-group">Demographics</div>', unsafe_allow_html=True)
     c1, c2 = st.columns(2)
     with c1:
         age = st.number_input("Age *", min_value=18, max_value=100, value=defaults["age"], help="Years (18–100)")
@@ -318,7 +332,7 @@ def build_patient_form(example: bool):
             help="Category 3 (asymptomatic) carries the highest risk weight")
         trestbps = st.number_input("Resting Blood Pressure *", min_value=80, max_value=220, value=defaults["trestbps"], help="mm Hg — normal < 120")
 
-    st.markdown("**Vitals & Labs**")
+    st.markdown('<div class="form-group">Vitals &amp; Labs</div>', unsafe_allow_html=True)
     c3, c4 = st.columns(2)
     with c3:
         chol = st.number_input("Cholesterol *", min_value=100, max_value=600, value=defaults["chol"], help="mg/dl — desirable < 200")
@@ -327,7 +341,7 @@ def build_patient_form(example: bool):
         restecg = st.selectbox("Resting ECG *", [0, 1, 2], index=defaults["restecg"], format_func=lambda x: _label(x, RESTEcg_LABELS))
         thalach = st.number_input("Maximum Heart Rate *", min_value=60, max_value=220, value=defaults["thalach"], help="bpm achieved during exercise")
 
-    st.markdown("**ECG & Exercise**")
+    st.markdown('<div class="form-group">ECG &amp; Exercise</div>', unsafe_allow_html=True)
     c5, c6 = st.columns(2)
     with c5:
         exang = st.selectbox("Exercise-Induced Angina *", [0, 1], index=defaults["exang"], format_func=lambda x: _binary(x, "No", "Yes"))
@@ -562,10 +576,12 @@ def render_history():
             <td><span class="mini-badge {badge}">{label}</span></td>
         </tr>""")
     table = f"""
+    <div class="table-wrap">
     <table class="log-table">
         <thead><tr><th>When</th><th>Age / Sex</th><th>Max HR</th><th>Probability</th><th>Risk</th></tr></thead>
         <tbody>{''.join(rows)}</tbody>
     </table>
+    </div>
     """
     st.markdown(chips + table, unsafe_allow_html=True)
     csv_bytes = logs.to_csv(index=False).encode("utf-8")
@@ -615,35 +631,33 @@ def main():
 
     left, right = st.columns([1.5, 1], gap="medium")
     with left:
-        st.markdown('<div class="section-card">', unsafe_allow_html=True)
-        st.markdown(
-            '<div class="panel-head"><span class="section-title"><span class="bar"></span>Assessment Input</span></div>',
-            unsafe_allow_html=True,
-        )
-        ex_btn = st.button("Load example patient", key="load_example",
-                           help="Pre-fill with a known high-risk sample")
-        if ex_btn:
-            st.session_state.example = True
-        patient, submitted = form_section(st.session_state.example)
-        st.markdown('</div>', unsafe_allow_html=True)
+        with st.container(key="input_card", height="stretch", vertical_alignment="top"):
+            st.markdown(
+                '<div class="panel-head"><span class="section-title"><span class="bar"></span>Assessment Input</span></div>',
+                unsafe_allow_html=True,
+            )
+            ex_btn = st.button("Load example patient", key="load_example",
+                               help="Pre-fill with a known high-risk sample")
+            if ex_btn:
+                st.session_state.example = True
+            patient, submitted = form_section(st.session_state.example)
 
     with right:
-        st.markdown('<div class="section-card">', unsafe_allow_html=True)
-        st.markdown(
-            '<div class="panel-head"><span class="section-title"><span class="bar"></span>Prediction Output</span></div>',
-            unsafe_allow_html=True,
-        )
-        if submitted:
-            if any(patient[k] <= 0 for k in ("age", "trestbps", "chol", "thalach")):
-                st.warning("Age, blood pressure, cholesterol, and heart rate must be positive.")
+        with st.container(key="output_card", height="stretch", vertical_alignment="top"):
+            st.markdown(
+                '<div class="panel-head"><span class="section-title"><span class="bar"></span>Prediction Output</span></div>',
+                unsafe_allow_html=True,
+            )
+            if submitted:
+                if any(patient[k] <= 0 for k in ("age", "trestbps", "chol", "thalach")):
+                    st.warning("Age, blood pressure, cholesterol, and heart rate must be positive.")
+                else:
+                    prediction, probability, transformed = predict_heart_disease(patient)
+                    log_prediction(patient, prediction, probability)
+                    contribs = feature_contributions(patient, transformed)
+                    display_result(prediction, probability, contribs, patient)
             else:
-                prediction, probability, transformed = predict_heart_disease(patient)
-                log_prediction(patient, prediction, probability)
-                contribs = feature_contributions(patient, transformed)
-                display_result(prediction, probability, contribs, patient)
-        else:
-            render_empty_state()
-        st.markdown('</div>', unsafe_allow_html=True)
+                render_empty_state()
 
     st.markdown('<div style="height:1.4rem;"></div>', unsafe_allow_html=True)
     st.markdown(

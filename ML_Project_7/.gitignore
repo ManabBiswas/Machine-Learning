@@ -1,1 +1,52 @@
-prediction_logs.csv
+# Python
+__pycache__/
+*.py[cod]
+*$py.class
+*.so
+.Python
+venv/
+env/
+ENV/
+.venv/
+
+# Jupyter
+.ipynb_checkpoints/
+
+# Distribution / packaging
+dist/
+build/
+*.egg-info/
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# OS
+.DS_Store
+Thumbs.db
+
+# ML models
+models/*.pkl
+models/*.joblib
+data/processed/*.joblib
+
+# Reports & logs
+reports/prediction_logs.csv
+reports/metrics.json
+*.log
+
+# Streamlit
+.streamlit/secrets.toml
+
+# Environment
+.env
+.env.local
+
+# Test
+app/__pycache__/
+.pytest_cache/
+.coverage
+
+.pyc
