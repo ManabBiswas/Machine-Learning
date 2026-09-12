@@ -1,0 +1,99 @@
+@import url("https://fonts.googleapis.com/css2?family=Sora:wght@500;600;700;800&family=Inter:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500;600&display=swap");
+@import "tailwindcss";
+
+@theme {
+  --font-display: "Sora", "Inter", sans-serif;
+  --font-body: "Inter", sans-serif;
+  --font-mono: "IBM Plex Mono", ui-monospace, monospace;
+  --ease-heartbeat: cubic-bezier(0.34, 1.4, 0.4, 1);
+}
+
+:root,
+[data-theme="dark"] {
+  --bg: #070b12;
+  --surface: #0e1520;
+  --surface-raised: #131b29;
+  --border: #1e2a3c;
+  --border-strong: #2a3a52;
+  --text: #e7edf5;
+  --text-muted: #8a97ac;
+  --signal: #35d0c0;
+  --signal-soft: rgba(53, 208, 192, 0.14);
+  --signal-2: #5b7fff;
+  --pulse: #ff6b5b;
+  --pulse-soft: rgba(255, 107, 91, 0.14);
+  --caution: #f5a623;
+  --caution-soft: rgba(245, 166, 35, 0.14);
+  --shadow-ambient: 0 24px 60px rgba(2, 5, 10, 0.55);
+}
+
+[data-theme="light"] {
+  --bg: #f7f5f1;
+  --surface: #ffffff;
+  --surface-raised: #ffffff;
+  --border: #e3ddd1;
+  --border-strong: #cfc6b4;
+  --text: #1c1a15;
+  --text-muted: #6b6459;
+  --signal: #3450a3;
+  --signal-soft: rgba(52, 80, 163, 0.1);
+  --signal-2: #c98a2c;
+  --pulse: #c4432e;
+  --pulse-soft: rgba(196, 67, 46, 0.1);
+  --caution: #b5790f;
+  --caution-soft: rgba(181, 121, 15, 0.1);
+  --shadow-ambient: 0 20px 48px rgba(28, 26, 21, 0.08);
+}
+
+* {
+  box-sizing: border-box;
+}
+
+html,
+body,
+#root {
+  height: 100%;
+}
+
+body {
+  margin: 0;
+  background: var(--bg);
+  color: var(--text);
+  font-family: var(--font-body);
+  -webkit-font-smoothing: antialiased;
+  transition: background-color 0.35s ease, color 0.35s ease;
+}
+
+::selection {
+  background: var(--signal-soft);
+  color: var(--text);
+}
+
+:focus-visible {
+  outline: 2px solid var(--signal);
+  outline-offset: 2px;
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar {
+  width: 10px;
+  height: 10px;
+}
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+::-webkit-scrollbar-thumb {
+  background: var(--border-strong);
+  border-radius: 8px;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *,
+  *::before,
+  *::after {
+    animation-duration: 0.001ms !important;
+    animation-iteration-count: 1 !important;
+    transition-duration: 0.001ms !important;
+    scroll-behavior: auto !important;
+  }
+}
