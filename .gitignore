@@ -19,6 +19,9 @@ build/
 *.egg-info/
 *.egg
 
+# Node
+node_modules/
+
 # IDE
 .vscode/
 .idea/
@@ -64,8 +67,8 @@ htmlcov/
 *.pyc
 
 # CardioLens — runtime artifacts required for Docker deploys
-!ML_Project_7 (A)/cardiolens/backend/models/
-!ML_Project_7 (A)/cardiolens/backend/models/*.pkl
-!ML_Project_7 (A)/cardiolens/backend/data/processed/
-!ML_Project_7 (A)/cardiolens/backend/data/processed/preprocessor.joblib
-!ML_Project_7 (A)/cardiolens/backend/reports/
+!ML_Project_7_A/cardiolens/backend/models/
+!ML_Project_7_A/cardiolens/backend/models/*.pkl
+!ML_Project_7_A/cardiolens/backend/data/processed/
+!ML_Project_7_A/cardiolens/backend/data/processed/preprocessor.joblib
+!ML_Project_7_A/cardiolens/backend/reports/
