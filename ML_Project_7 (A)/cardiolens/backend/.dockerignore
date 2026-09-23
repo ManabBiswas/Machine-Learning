@@ -1,0 +1,11 @@
+__pycache__/
+*.py[cod]
+.venv/
+venv/
+.ipynb_checkpoints/
+notebooks/
+.git
+.gitignore
+Dockerfile
+.dockerignore
+*.md

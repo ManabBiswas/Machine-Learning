@@ -1,5 +1,15 @@
-docs/
+# Python
+__pycache__/
+*.py[cod]
+.venv/
+venv/
 
-node_module/
+# Node
+node_modules/
 
-py
+# Build output
+frontend/dist/
+
+# Env
+.env
+.env.local

@@ -1,0 +1,50 @@
+name: CI
+
+on:
+  push:
+    branches: [main, master]
+  pull_request:
+
+jobs:
+  backend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: "ML_Project_7 (A)/cardiolens/backend"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.11"
+          cache: pip
+          cache-dependency-path: "ML_Project_7 (A)/cardiolens/backend/requirements.txt"
+      - name: Install dependencies
+        run: pip install -r requirements.txt
+      - name: Check model artifacts are tracked in git
+        run: |
+          test -f models/logistic_regression_model.pkl
+          test -f data/processed/preprocessor.joblib
+          test -f reports/metrics.json
+      - name: Import app
+        run: python -c "from main import app; print('app ok')"
+      - name: Docker build
+        run: docker build -t cardiolens-api .
+
+  frontend:
+    runs-on: ubuntu-latest
+    defaults:
+      run:
+        working-directory: "ML_Project_7 (A)/cardiolens/frontend"
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 22
+          cache: npm
+          cache-dependency-path: "ML_Project_7 (A)/cardiolens/frontend/package-lock.json"
+      - name: Install dependencies
+        run: npm ci
+      - name: Lint
+        run: npm run lint
+      - name: Build
+        run: npm run build

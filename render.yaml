@@ -1,0 +1,14 @@
+# Render blueprint — backend API (Docker).
+# Connect this repo on render.com → New → Blueprint; Render picks this up
+# from the repo root automatically.
+services:
+  - type: web
+    name: cardiolens-api
+    runtime: docker
+    rootDir: "ML_Project_7 (A)/cardiolens/backend"
+    plan: free
+    healthCheckPath: /api/health
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: "10000"

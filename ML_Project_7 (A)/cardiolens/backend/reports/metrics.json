@@ -1,0 +1,7 @@
+{
+  "model": "Logistic Regression",
+  "model_version": "2.0",
+  "accuracy": 0.8525,
+  "f1": 0.8364,
+  "label_convention": "target=1 means disease present (corrected from original dataset's inverted convention)"
+}

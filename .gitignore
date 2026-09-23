@@ -62,3 +62,10 @@ htmlcov/
 # Type checking
 .mypy_cache/
 *.pyc
+
+# CardioLens — runtime artifacts required for Docker deploys
+!ML_Project_7 (A)/cardiolens/backend/models/
+!ML_Project_7 (A)/cardiolens/backend/models/*.pkl
+!ML_Project_7 (A)/cardiolens/backend/data/processed/
+!ML_Project_7 (A)/cardiolens/backend/data/processed/preprocessor.joblib
+!ML_Project_7 (A)/cardiolens/backend/reports/
