@@ -5,7 +5,7 @@ services:
   - type: web
     name: cardiolens-api
     runtime: docker
-    rootDir: "ML_Project_7 (A)/cardiolens/backend"
+    rootDir: ML_Project_7_A/cardiolens/backend
     plan: free
     healthCheckPath: /api/health
     autoDeploy: true

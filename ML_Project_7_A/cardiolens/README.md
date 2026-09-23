@@ -65,17 +65,17 @@ cover the SPA.
 
 **Backend → Railway (manual)**
 1. New project → deploy from repo, set **root directory** to
-   `ML_Project_7 (A)/cardiolens/backend` (Dockerfile is auto-detected).
+   `ML_Project_7_A/cardiolens/backend` (Dockerfile is auto-detected).
 2. Note the generated URL.
 
 **Frontend → Vercel**
-1. Import the repo, root dir = `ML_Project_7 (A)/cardiolens/frontend`.
+1. Import the repo, root dir = `ML_Project_7_A/cardiolens/frontend`.
 2. Build command `npm run build`, output dir `dist`.
 3. Set env var `VITE_API_URL` to the backend URL (no trailing slash).
 4. Deploy — `vercel.json` handles SPA routing.
 
 **Frontend → Netlify**
-1. Import the repo, base directory = `ML_Project_7 (A)/cardiolens/frontend`.
+1. Import the repo, base directory = `ML_Project_7_A/cardiolens/frontend`.
 2. `netlify.toml` sets build command, publish dir, and SPA redirects.
 3. Set env var `VITE_API_URL` the same way.
 
