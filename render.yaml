@@ -12,3 +12,5 @@ services:
     envVars:
       - key: PORT
         value: "10000"
+      - key: ALLOWED_ORIGINS
+        value: "http://localhost:5173"

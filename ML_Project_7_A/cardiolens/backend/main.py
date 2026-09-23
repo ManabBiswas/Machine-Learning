@@ -5,6 +5,7 @@ straight port of the prediction logic that used to live in the
 Streamlit app, exposed as a JSON API for the React frontend.
 """
 import json
+import os
 from datetime import datetime
 from pathlib import Path
 from typing import Literal
@@ -42,11 +43,21 @@ EXAMPLE_PATIENT = {
 
 app = FastAPI(title="CardioLens API", version="1.0")
 
+# Comma-separated origins, e.g. "https://cardiolens365.vercel.app,http://localhost:5173"
+# Falls back to local dev origins only — never "*" in prod.
+_allowed_origins = [
+    o.strip()
+    for o in os.environ.get(
+        "ALLOWED_ORIGINS", "http://localhost:5173,http://localhost:3000"
+    ).split(",")
+    if o.strip()
+]
+
 app.add_middleware(
     CORSMiddleware,
-    allow_origins=["*"],  # dev only — tighten to your deployed frontend origin in prod
-    allow_methods=["*"],
-    allow_headers=["*"],
+    allow_origins=_allowed_origins,
+    allow_methods=["GET", "POST"],
+    allow_headers=["Content-Type"],
 )
 
 _model = None
