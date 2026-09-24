@@ -1,9 +1,19 @@
+# CI scoped to CardioLens paths — other project folders don't trigger these jobs.
+# When you add a deployable project, add a workflow (or job) with its own paths:.
 name: CI
 
 on:
   push:
     branches: [main, master]
+    paths:
+      - "ML_Project_7_A/**"
+      - ".github/workflows/ci.yml"
+      - "render.yaml"
   pull_request:
+    paths:
+      - "ML_Project_7_A/**"
+      - ".github/workflows/ci.yml"
+      - "render.yaml"
 
 jobs:
   backend:

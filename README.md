@@ -11,6 +11,20 @@ A collection of machine learning projects covering healthcare, insurance, automo
 
 ## 🚀 Projects
 
+### 🫀 CardioLens — Heart Disease Risk App (Deployed)
+**Path:** `ML_Project_7_A/cardiolens/`
+**Live:** [cardiolens365.vercel.app](https://cardiolens365.vercel.app) ·
+API: [cardiolens-api-r1q7.onrender.com](https://cardiolens-api-r1q7.onrender.com)
+
+Full-stack interpretable heart-disease risk prediction: FastAPI + scikit-learn backend, React 19 + TypeScript + Tailwind frontend.
+- **Key Highlights:**
+  - Logistic regression served as a JSON API (Dockerized, deployed on Render).
+  - Risk tier + top feature contributions for every prediction (SHAP-style drivers).
+  - Multi-page React SPA (Home / Assess / Insights / About) with dark/light themes.
+  - CI via GitHub Actions; CORS locked to the deployed origin via env var.
+
+---
+
 ### 🧬 Iris Classification with KNN
 **Path:** `ML_Project_5/KNN-2.ipynb`
 
@@ -43,7 +57,7 @@ Predicts the presence of heart disease based on clinical and physical measuremen
   - Standardized features using `StandardScaler`.
 
 ### 💰 Insurance Charge Prediction
-**Path:** `ML_ project_1/insurance.ipynb`
+**Path:** `ML_Project_1/insurance.ipynb`
 
 Predicts healthcare insurance costs based on customer demographics and health metrics.
 - **Key Highlights:**

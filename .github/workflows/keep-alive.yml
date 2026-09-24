@@ -1,0 +1,17 @@
+# Pings free-tier backend(s) every 14 min so Render doesn't sleep them.
+# Add a new - run: curl line per deployed service.
+name: Keep Alive
+
+on:
+  schedule:
+    - cron: "*/14 * * * *"
+  workflow_dispatch:
+
+jobs:
+  ping:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Wake cardiolens-api
+        run: curl -fsS https://cardiolens-api-r1q7.onrender.com/health || exit 1
+      # - name: Wake future-api
+      #   run: curl -fsS https://your-future-service.onrender.com/health || exit 1
