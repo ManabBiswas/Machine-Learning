@@ -41,7 +41,11 @@ EXAMPLE_PATIENT = {
     "ca": 2, "thal": 2,
 }
 
-app = FastAPI(title="CardioLens API", version="1.0")
+app = FastAPI(
+    title="CardioLens API",
+    description="Interpretable heart disease risk prediction API.",
+    version="2.0",
+)
 
 # Comma-separated origins, e.g. "https://cardiolens365.vercel.app,http://localhost:5173"
 # Falls back to local dev origins only — never "*" in prod.
@@ -149,10 +153,19 @@ def log_prediction(patient: dict, prediction: int, probability: float):
     df.to_csv(LOG_FILE, index=False)
 
 
-@app.get("/api/health")
-def health():
+def _health_payload():
     ok = MODEL_PATH.exists() and PREPROCESSOR_PATH.exists()
     return {"status": "ok" if ok else "model_missing"}
+
+
+@app.get("/health")
+def health_root():
+    return _health_payload()
+
+
+@app.get("/api/health")
+def health():
+    return _health_payload()
 
 
 @app.get("/api/metrics")

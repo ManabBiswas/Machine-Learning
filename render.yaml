@@ -7,10 +7,6 @@ services:
     runtime: docker
     rootDir: ML_Project_7_A/cardiolens/backend
     plan: free
-    healthCheckPath: /api/health
+    healthCheckPath: /health
     autoDeploy: true
-    envVars:
-      - key: PORT
-        value: "10000"
-      - key: ALLOWED_ORIGINS
-        value: "http://localhost:5173"
+    

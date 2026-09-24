@@ -4,6 +4,9 @@ Interpretable heart disease risk prediction. A logistic regression model
 (scikit-learn) served through a FastAPI backend, with a React + TypeScript
 frontend.
 
+**Live:** [cardiolens365.vercel.app](https://cardiolens365.vercel.app) ·
+API: [cardiolens-api-r1q7.onrender.com](https://cardiolens-api-r1q7.onrender.com)
+
 ## Architecture
 
 ```
@@ -61,7 +64,7 @@ cover the SPA.
 **Backend → Render (blueprint)**
 1. Push the repo, then on render.com: **New → Blueprint**, pick the repo.
    Render reads `render.yaml` at the root and builds `backend/` via Docker.
-2. Note the URL, e.g. `https://cardiolens-api.onrender.com`.
+2. Note the URL, e.g. `https://cardiolens-api-r1q7.onrender.com`.
 
 **Backend → Railway (manual)**
 1. New project → deploy from repo, set **root directory** to
