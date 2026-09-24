@@ -1,6 +1,8 @@
-# Render blueprint — backend API (Docker).
+# Render blueprint — backend APIs (Docker).
 # Connect this repo on render.com → New → Blueprint; Render picks this up
 # from the repo root automatically.
+# One service entry per deployable backend. Add a new block when you add
+# a new project folder.
 services:
   - type: web
     name: cardiolens-api
@@ -9,4 +11,13 @@ services:
     plan: free
     healthCheckPath: /health
     autoDeploy: true
-    
+    envVars:
+      - key: PORT
+        value: "10000"
+      - key: ALLOWED_ORIGINS
+        value: "https://cardiolens365.vercel.app,http://localhost:5173"
+    buildFilter:
+      paths:
+        - ML_Project_7_A/cardiolens/backend/**
+        - ML_Project_7_A/cardiolens/models/**
+        - render.yaml

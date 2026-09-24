@@ -57,7 +57,7 @@ Predicts the presence of heart disease based on clinical and physical measuremen
   - Standardized features using `StandardScaler`.
 
 ### 💰 Insurance Charge Prediction
-**Path:** `ML_ project_1/insurance.ipynb`
+**Path:** `ML_Project_1/insurance.ipynb`
 
 Predicts healthcare insurance costs based on customer demographics and health metrics.
 - **Key Highlights:**
