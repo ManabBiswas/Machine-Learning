@@ -28,6 +28,7 @@ class PredictRequest(BaseModel):
 
 
 @app.get("/api/health")
+@app.get("/health")
 def health() -> dict:
     return {"status": "ok"}
 
